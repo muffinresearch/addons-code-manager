@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
+import configureStore from '../src/configureStore';
 import VersionChooser from '../src/components/VersionChooser';
-import { fakeVersions } from '../src/test-helpers';
+import { actions } from '../src/reducers/versions';
+import { fakeVersionsList } from '../src/test-helpers';
+import { renderWithStoreAndRouter } from './utils';
 
 storiesOf('VersionChooser', module).addWithChapters('all variants', {
   chapters: [
@@ -10,7 +13,19 @@ storiesOf('VersionChooser', module).addWithChapters('all variants', {
       sections: [
         {
           title: 'default state',
-          sectionFn: () => <VersionChooser versions={fakeVersions} />,
+          sectionFn: () => {
+            const addonId = 124;
+
+            const store = configureStore();
+            store.dispatch(
+              actions.loadVersionsList({ addonId, versions: fakeVersionsList }),
+            );
+
+            return renderWithStoreAndRouter(
+              <VersionChooser addonId={addonId} />,
+              store,
+            );
+          },
         },
       ],
     },

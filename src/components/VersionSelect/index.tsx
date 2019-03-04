@@ -1,18 +1,13 @@
 import * as React from 'react';
 import { Col, Form } from 'react-bootstrap';
 
+import { VersionsList } from '../../reducers/versions';
 import { gettext } from '../../utils';
-
-export type Version = {
-  channel: string;
-  id: number;
-  version: string;
-};
 
 type PublicProps = {
   label: string;
-  listedVersions: Version[];
-  unlistedVersions: Version[];
+  listedVersions: VersionsList;
+  unlistedVersions: VersionsList;
 };
 
 class VersionSelectBase extends React.Component<PublicProps> {
